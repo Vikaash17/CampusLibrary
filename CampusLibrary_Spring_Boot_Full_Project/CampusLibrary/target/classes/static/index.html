@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f1f3f8">
+    <title>Campus Library | GraphQL + MySQL</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+</head>
+<body>
+    <main class="page-shell">
+        <header class="page-header">
+            <div class="brand-mark" aria-hidden="true">CL</div>
+            <div class="heading-copy">
+                <p class="eyebrow">CS543 · WEB SERVICES · GRAPHQL</p>
+                <h1>Campus Library</h1>
+                <p class="subtitle">Authors and their books, served by GraphQL and stored in MySQL.</p>
+            </div>
+            <a class="api-link" href="/graphiql" target="_blank" rel="noreferrer">Open GraphiQL <span aria-hidden="true">↗</span></a>
+        </header>
+
+        <section class="intro-panel" aria-label="Library overview">
+            <div>
+                <p class="section-kicker">YOUR READING COLLECTION</p>
+                <h2>One query. Every author and their books.</h2>
+                <p class="intro-copy">Browse the authors below, or add a book using the form. The page sends GraphQL requests to the Spring Boot API; it never connects to MySQL directly.</p>
+            </div>
+            <div class="stats" aria-label="Library statistics">
+                <div class="stat-card">
+                    <span id="authorCount" class="stat-number">—</span>
+                    <span class="stat-label">Authors</span>
+                </div>
+                <div class="stat-card">
+                    <span id="bookCount" class="stat-number">—</span>
+                    <span class="stat-label">Books</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="library-section" aria-labelledby="authorsHeading">
+            <div class="section-heading">
+                <div>
+                    <p class="section-kicker">THE COLLECTION</p>
+                    <h2 id="authorsHeading">Authors &amp; books</h2>
+                </div>
+                <button id="refreshButton" class="button button-secondary" type="button">
+                    <span aria-hidden="true">↻</span> Refresh list
+                </button>
+            </div>
+
+            <p id="statusMessage" class="status-message" role="status" aria-live="polite" hidden></p>
+            <div id="authorList" class="author-grid" aria-live="polite" aria-busy="true">
+                <div class="loading-card"><span class="spinner" aria-hidden="true"></span>Loading authors and books…</div>
+            </div>
+        </section>
+
+        <section class="add-section" aria-labelledby="addHeading">
+            <div class="add-intro">
+                <div class="add-icon" aria-hidden="true">＋</div>
+                <p class="section-kicker">GROW THE COLLECTION</p>
+                <h2 id="addHeading">Add a book</h2>
+                <p>Submit the form to save a new book in MySQL through a GraphQL mutation.</p>
+            </div>
+
+            <form id="addBookForm" class="add-form">
+                <label for="title">Book title <span class="required-mark">*</span></label>
+                <input id="title" name="title" type="text" maxlength="200" placeholder="e.g. GraphQL for Beginners" required>
+
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="year">Publication year</label>
+                        <input id="year" name="year" type="number" min="0" max="9999" step="1" placeholder="e.g. 2025">
+                    </div>
+                    <div class="form-field">
+                        <label for="authorId">Author <span class="required-mark">*</span></label>
+                        <select id="authorId" name="authorId" required>
+                            <option value="">Loading authors…</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="submitButton" class="button button-primary" type="submit">
+                    <span aria-hidden="true">＋</span> Add book
+                </button>
+                <p class="form-note">Fields marked with <span class="required-mark">*</span> are required. Year is optional.</p>
+            </form>
+        </section>
+
+        <footer class="page-footer">
+            <span>Campus Library</span>
+            <span>Spring Boot · GraphQL · MySQL</span>
+        </footer>
+    </main>
+</body>
+</html>
